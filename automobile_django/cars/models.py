@@ -11,7 +11,7 @@ def get_slot_number():
 
 class Color(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=True, blank=True, unique=True)
 
     def __str__(self):
         return self.name
@@ -42,7 +42,7 @@ class Slot(models.Model):
 
 class Car(models.Model):
     id = models.UUIDField(primary_key=True)
-    name = models.CharField(max_length=250, null=False, blank=False)
+    name = models.CharField(max_length=250, null=False, blank=False, unique=True)
     color = models.ForeignKey(Color, related_name="cars")
 
     def __str__(self):
