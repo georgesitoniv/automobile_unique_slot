@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="input-field">
+      <select id="select-color">
+        <option value="" disabled selected>Choose your preferred color</option>
+        <option value="All" id="select-color-all">All</option>
+      </select>
+      <label>Color Selection</label>
+      <div id="car-container" class="row padding-10">
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+<script>
+  var selectColor = document.getElementById('select-color');
+  var carContainer = document.getElementById('car-container');
+
+  $(document).ready(function(){
+    getAllColors();
+    getAllCars();
+  });
+
+  $("#select-color").change(function(){
+    displayCars($(this).val());
+  })
+
+  function displayCars(value){
+    if(value == "All" || value == null){
+      getAllCars();
+    } else {
+      getCarsByColor(value);
+    }
+  }
+
+  function getAllColors(){
+    $.ajax({
+      url: '{% url "cars:all_colors" %}',
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        colors = data;
+        populateColors(selectColor, colors);
+      }
+    });
+  }
+
+  function getAllCars(){
+    $.ajax({
+      url: '{% url "cars:all_cars" %}',
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        cars = data;
+        renderCars(cars, carContainer);
+      }
+    });
+  }
+
+  function getCarsByColor(id){
+    $.ajax({
+      url: '{% url "cars:cars_by_color" %}',
+      data:{
+        id: id
+      },
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        cars = data;
+        renderCars(cars, carContainer);
+      }
+    });
+  }
+
+  function moveCar(id, direction){
+    $.ajax({
+      url: '{% url "cars:move_car" %}',
+      data:{
+        id: id,
+        direction: direction
+      },
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        displayCars($("#select-color").val());
+      }
+    });
+  }
+
+  function moveUp(id, reference_slot_number){
+    $.ajax({
+      url: '{% url "cars:move_up" %}',
+      data:{
+        id: id,
+        reference_slot_number: reference_slot_number
+      },
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        displayCars($("#select-color").val());
+      }
+    });
+  }
+
+  function moveDown(id, reference_slot_number){
+    $.ajax({
+      url: '{% url "cars:move_down" %}',
+      data:{
+        id: id,
+        reference_slot_number: reference_slot_number
+      },
+      type: "GET",
+      dataType: "json",
+      success: function(data){
+        displayCars($("#select-color").val());
+      }
+    });
+  }
+
+  function populateColors(element, data){
+    $.each(data, function(key, value){
+      var opt = document.createElement('option');
+      opt.innerHTML = value.name.toString();
+      opt.value = value.id;
+      opt.id = value.id;
+      element.appendChild(opt);
+    });
+    $('select').material_select();
+  }
+
+  function renderCars(cars, element){
+    element.innerHTML= '';
+    $.each(cars, function(key, value){
+      element.appendChild(renderCar(value));
+    });
+    car_function_container();
+  }
+
+  function renderCar(car){
+    var card_car = document.createElement('div');
+    card_car.innerHTML = "<div><p>Car Name: " + car.name + "</p></div>"
+      + "<div class='circle circle-block valign-wrapper " + car.color_name.toLowerCase()+ "'>"
+      +"<span class='container'>"+car.color_name.toLowerCase()+"</span></div>"
+      + "<div><p>Slot Number: " + car.index + "</p></div>"
+      + "<div><button class='btn btn-floating green waves-effect waves-light btn-move-up' id="+car.id+" data-previous-slot="+car.previous_slot+" data-next-slot="+car.next_slot+"><i class='material-icons'>keyboard_arrow_up</i></button>"
+      + "<button class='btn btn-floating amber waves-effect waves-light btn-move-down' id="+car.id+" data-previous-slot="+car.previous_slot+" data-next-slot="+car.next_slot+"><i class='material-icons'>keyboard_arrow_down</i></button></div>";
+      card_car.className = "card-panel col s12 m4 l3 center padding-vertical-15";
+    return card_car;
+  }
+
+  function car_function_container(){
+    $(".btn-move-up").click(function(){
+      if(this.getAttribute('data-previous-slot') != 'null'){
+        moveUp(this.id, this.getAttribute('data-previous-slot'));
+      }
+    });
+    $(".btn-move-down").click(function(){
+      if(this.getAttribute('data-next-slot') != 'null'){
+        moveDown(this.id, this.getAttribute('data-next-slot'));
+      }
+    });
+  }
+
+</script>
+{% endblock %}

@@ -1,0 +1,4 @@
+/automobile_react/node_modules/
+*.pyc
+automobile-schema.png
+/automobile_django/db.sqlite3

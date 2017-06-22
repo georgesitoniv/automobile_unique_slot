@@ -1,0 +1,41 @@
+{
+  "name": "automobile_react",
+  "version": "1.0.0",
+  "description": "the front end of automobile django",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js --ignore client",
+    "build": "webpack-dev-server"
+  },
+  "author": "George Siton IV",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-client": "^0.8.1",
+    "axios": "^0.15.3",
+    "babel": "^6.23.0",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "body-parser": "^1.16.0",
+    "css-loader": "^0.26.1",
+    "express": "^4.14.0",
+    "graphql": "^0.8.2",
+    "html-webpack-plugin": "^2.26.0",
+    "lodash": "^4.17.4",
+    "material-ui": "^0.18.3",
+    "material-ui-chip-input": "^0.15.0",
+    "nodemon": "*",
+    "react": "15.4.2",
+    "react-apollo": "^0.9.0",
+    "react-dom": "15.4.2",
+    "react-redux": "^5.0.5",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.7.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
