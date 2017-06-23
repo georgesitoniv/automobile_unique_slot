@@ -6,16 +6,16 @@ The Order String:
   Format: CarID-BeforeSlotIdentifier-CarID-AfterSlotIdentifier <br/>
   Example: 0000000000000000-9999999999999999-0000000000000000-0000000000000000 <br/>
   
-  Implementation:<br/>
-    Models:<br/>
-      Car Name: Everest<br/>
-      Order String: 0000000000000000-9999999999999999-0000000000000001-0000000000000000<br/>
+  Implementation:
+    Models:
+      Car Name: Everest
+      Order String: 0000000000000000-9999999999999999-0000000000000001-0000000000000000
 
-      Car Name: Innova<br/>
-      Order String: 0000000000000000-9999999999999999-0000000000000002-0000000000000000<br/>
+      Car Name: Innova
+      Order String: 0000000000000000-9999999999999999-0000000000000002-0000000000000000
       
-      Car Name: Almera<br/>
-      Order String: 0000000000000000-9999999999999999-0000000000000003-0000000000000000<br/>
+      Car Name: Almera
+      Order String: 0000000000000000-9999999999999999-0000000000000003-0000000000000000
     
     
     Actions:
